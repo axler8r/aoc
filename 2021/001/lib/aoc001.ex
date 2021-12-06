@@ -5,12 +5,12 @@ defmodule Aoc001 do
     |> Enum.map(&String.to_integer/1)
     |> Enum.reduce({0, -1}, fn (current, {previous, acc} = _acc) ->
       cond do
-        current >= previous -> {current, acc + 1}
+        current > previous -> {current, acc + 1}
         true -> {current, acc}
       end
     end)
 
-    IO.puts(answer)
+    answer
   end
 
   def problem2 do
