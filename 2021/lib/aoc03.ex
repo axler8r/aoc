@@ -1,6 +1,6 @@
-defmodule Aoc003 do
+defmodule AdventOfCode.Day03 do
   def problem1 do
-    {γ, ε} = File.read!("data/input")
+    {γ, ε} = File.read!("data/03/input")
     |> calculate_rates()
 
     String.to_integer(γ, 2) * String.to_integer(ε, 2)

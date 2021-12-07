@@ -1,6 +1,6 @@
-defmodule Aoc001 do
+defmodule AdventOfCode.Day01 do
   def problem1 do
-    {_, answer} = File.stream!("data/input")
+    {_, answer} = File.stream!("data/01/input")
     |> Enum.map(&String.trim/1)
     |> Enum.map(&String.to_integer/1)
     |> Enum.reduce({0, -1}, fn (current, {previous, acc} = _acc) ->
@@ -14,7 +14,7 @@ defmodule Aoc001 do
   end
 
   def problem2 do
-    {_, answer} = File.stream!("data/input")
+    {_, answer} = File.stream!("data/01/input")
     |> Enum.map(&String.trim/1)
     |> Enum.map(&String.to_integer/1)
     |> Enum.to_list()

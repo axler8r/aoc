@@ -1,6 +1,6 @@
-defmodule Aoc002 do
+defmodule AdventOfCode.Day02 do
   def problem1 do
-    {x, y} = File.read!("data/input")
+    {x, y} = File.read!("data/02/input")
     |> extract_position()
 
     x * y
