@@ -39,30 +39,46 @@ defmodule AdventOfCode.Day03 do
     γ * ε
   end
 
-  def problem2 do
-    co2 = List.to_integer(do_reduce(input(), &</2), 2)
-    o2 = List.to_integer(do_reduce(input(), &>/2), 2)
+  @spec input2 :: list
+  def input2() do
+    input =
+      File.read!("data/03/input")
+      |> String.split("\n", trim: true)
+      |> Enum.map(&(&1 |> String.to_charlist() |> List.to_tuple()))
 
-    co2 * o2
+    input
   end
 
-  defp do_reduce(list, cb), do: do_reduce(list, 0, cb)
+  @spec problem2 :: integer
+  def problem2 do
+    input = input2()
 
-  defp do_reduce([elem], _, _), do: elem
+    o2(input) * co2(input)
+  end
 
-  defp do_reduce(list, at, cb) do
-    counts = count(list)
+  defp o2(numbers) do
+    do_extract(numbers, 0, fn zero_count, one_count ->
+      if one_count >= zero_count, do: ?1, else: ?0
+    end)
+  end
 
-    half = div(length(list), 2)
-    count = Enum.at(counts, at)
+  defp co2(numbers) do
+    do_extract(numbers, 0, fn zero_count, one_count ->
+      if zero_count <= one_count, do: ?0, else: ?1
+    end)
+  end
 
-    bit =
-      cond do
-        count == half and cb.(count + 1, half) -> ?1
-        count != half and cb.(count, half) -> ?1
-        true -> ?0
-      end
+  defp do_extract([number], _pos, _fun) do
+    number
+    |> Tuple.to_list()
+    |> List.to_integer(2)
+  end
 
-    do_reduce(Enum.filter(list, &(Enum.at(&1, at) == bit)), at + 1, cb)
+  defp do_extract(numbers, pos, fun) do
+    zero_count = Enum.count(numbers, &(elem(&1, pos) == ?0))
+    one_count = length(numbers) - zero_count
+    to_keep = fun.(zero_count, one_count)
+    numbers = Enum.filter(numbers, &(elem(&1, pos) == to_keep))
+    do_extract(numbers, pos + 1, fun)
   end
 end
