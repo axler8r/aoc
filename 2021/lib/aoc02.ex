@@ -1,17 +1,29 @@
 defmodule AdventOfCode.Day02 do
+  def input do
+    input =
+      File.stream!("data/02/input")
+      |> Stream.map(fn input ->
+        case String.trim(input) do
+          "forward " <> n -> {:forward, String.to_integer(n)}
+          "up " <> n -> {:up, String.to_integer(n)}
+          "down " <> n -> {:down, String.to_integer(n)}
+        end
+      end)
+
+    input
+  end
+
+  @spec problem1 :: number
   def problem1 do
-    {x, y} = File.read!("data/02/input")
-    |> extract_position()
+    {h, d} =
+      input()
+      |> Enum.reduce({0, 0}, fn
+        {:forward, n}, {h, d} -> {h + n, d}
+        {:up, n}, {h, d} -> {h, d - n}
+        {:down, n}, {h, d} -> {h, d + n}
+      end)
 
-    x * y
-  end
-
-  defp extract_position(data) do
-    do_extract_position(data, {0, 0})
-  end
-
-  defp do_extract_position(<<>>, acc) do
-    acc
+    h * d
   end
 
   defp do_extract_position("forward " <> <<p, 10, tail::binary>> = _data, {f, d} = _acc) do
