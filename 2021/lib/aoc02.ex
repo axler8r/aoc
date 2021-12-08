@@ -25,4 +25,17 @@ defmodule AdventOfCode.Day02 do
 
     h * d
   end
+
+  @spec problem2 :: number
+  def problem2 do
+    {h, d, _} =
+      input()
+      |> Enum.reduce({0, 0, 0}, fn
+        {:forward, n}, {h, d, a} -> {h + n, d + a * n, a}
+        {:up, n}, {h, d, a} -> {h, d, a - n}
+        {:down, n}, {h, d, a} -> {h, d, a + n}
+      end)
+
+    h * d
+  end
 end
