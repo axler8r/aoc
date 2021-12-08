@@ -25,19 +25,4 @@ defmodule AdventOfCode.Day02 do
 
     h * d
   end
-
-  defp do_extract_position("forward " <> <<p, 10, tail::binary>> = _data, {f, d} = _acc) do
-    change = String.to_integer(<<p>>);
-    do_extract_position(tail, {f + change, d})
-  end
-
-  defp do_extract_position("down " <> <<p, 10, tail::binary>> = _data, {f, d} = _acc) do
-    change = String.to_integer(<<p>>);
-    do_extract_position(tail, {f, d + change})
-  end
-
-  defp do_extract_position("up " <> <<p, 10, tail::binary>> = _data, {f, d} = _acc) do
-    change = String.to_integer(<<p>>);
-    do_extract_position(tail, {f, d - change})
-  end
 end
