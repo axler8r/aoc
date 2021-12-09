@@ -1,20 +1,4 @@
 defmodule AdventOfCode.Day06 do
-  @spec input :: map
-  def input() do
-    #seed = %{0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0, 8 => 0}
-    seed = for i <- 0..8, into: %{}, do: {i, 0}
-
-    input =
-      File.read!("data/06/input")
-      |> String.trim()
-      |> String.split(",")
-      |> Enum.map(&String.to_integer/1)
-      |> Enum.frequencies()
-      |> Map.merge(seed, fn _, a, _ -> a end)
-
-    input
-  end
-
   @spec problem1 :: number
   def problem1 do
     1..80
@@ -29,6 +13,20 @@ defmodule AdventOfCode.Day06 do
     |> Enum.reduce(input(), fn _, acc -> next(acc) end)
     |> Map.values()
     |> Enum.sum()
+  end
+
+  defp input() do
+    seed = for i <- 0..8, into: %{}, do: {i, 0}
+
+    input =
+      File.read!("data/06/input")
+      |> String.trim()
+      |> String.split(",")
+      |> Enum.map(&String.to_integer/1)
+      |> Enum.frequencies()
+      |> Map.merge(seed, fn _, a, _ -> a end)
+
+    input
   end
 
   defp next(%{0 => next} = population) do

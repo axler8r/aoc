@@ -1,16 +1,4 @@
 defmodule AdventOfCode.Day09 do
-  defp input do
-    input =
-      File.read!("data/09/input")
-      |> String.split("\n", trim: true)
-      |> Enum.map(&String.to_charlist(String.trim(&1)))
-      |> Nx.tensor(names: [:y, :x])
-      |> Nx.subtract(?0)
-      |> Nx.add(1)
-
-    input
-  end
-
   @spec problem1 :: number
   def problem1 do
     {width, height} = _shape = Nx.shape(input())
@@ -75,5 +63,17 @@ defmodule AdventOfCode.Day09 do
     |> Enum.sort(:desc)
     |> Enum.take(3)
     |> Enum.reduce(&*/2)
+  end
+
+  defp input do
+    input =
+      File.read!("data/09/input")
+      |> String.split("\n", trim: true)
+      |> Enum.map(&String.to_charlist(String.trim(&1)))
+      |> Nx.tensor(names: [:y, :x])
+      |> Nx.subtract(?0)
+      |> Nx.add(1)
+
+    input
   end
 end

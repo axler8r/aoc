@@ -1,32 +1,12 @@
 defmodule AdventOfCode.Day03 do
-  @spec input :: list
-  def input do
-    input =
-      File.stream!("data/03/input")
-      |> Enum.map(&String.trim/1)
-      |> Enum.map(&String.to_charlist/1)
-
-    input
-  end
-
-  @spec count(any) :: any
-  def count(list) do
-    Enum.reduce(list, List.duplicate(0, 12), fn input, acc ->
-      for {value, counter} <- Enum.zip(input, acc) do
-        case value do
-          ?1 -> counter + 1
-          ?0 -> counter
-        end
-      end
-    end)
-  end
-
   @spec problem1 :: number
   def problem1 do
-    half = div(length(input()), 2)
+    {input, _} = input()
+
+    half = div(length(input), 2)
 
     {γ, ε} =
-      input()
+      input
       |> count()
       |> Enum.reduce({0, 0}, fn elem, {a, b} ->
         if elem > half do
@@ -39,19 +19,9 @@ defmodule AdventOfCode.Day03 do
     γ * ε
   end
 
-  @spec input2 :: list
-  def input2() do
-    input =
-      File.read!("data/03/input")
-      |> String.split("\n", trim: true)
-      |> Enum.map(&(&1 |> String.to_charlist() |> List.to_tuple()))
-
-    input
-  end
-
   @spec problem2 :: integer
   def problem2 do
-    input = input2()
+    {_, input} = input()
 
     o2(input) * co2(input)
   end
@@ -65,6 +35,37 @@ defmodule AdventOfCode.Day03 do
   defp co2(numbers) do
     do_extract(numbers, 0, fn zero_count, one_count ->
       if zero_count <= one_count, do: ?0, else: ?1
+    end)
+  end
+
+  defp input, do: {input1(), input2()}
+
+  defp input1 do
+    input =
+      File.stream!("data/03/input")
+      |> Enum.map(&String.trim/1)
+      |> Enum.map(&String.to_charlist/1)
+
+    input
+  end
+
+  defp input2() do
+    input =
+      File.read!("data/03/input")
+      |> String.split("\n", trim: true)
+      |> Enum.map(&(&1 |> String.to_charlist() |> List.to_tuple()))
+
+    input
+  end
+
+  defp count(list) do
+    Enum.reduce(list, List.duplicate(0, 12), fn input, acc ->
+      for {value, counter} <- Enum.zip(input, acc) do
+        case value do
+          ?1 -> counter + 1
+          ?0 -> counter
+        end
+      end
     end)
   end
 

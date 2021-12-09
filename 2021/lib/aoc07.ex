@@ -1,14 +1,5 @@
 defmodule AdventOfCode.Day07 do
-  def input do
-    input =
-      File.read!("data/07/input")
-      |> String.trim()
-      |> String.split(",")
-      |> Enum.map(&String.to_integer/1)
-
-    input
-  end
-
+  @spec problem1 :: number
   def problem1 do
     mean = Enum.at(Enum.sort(input()), div(length(input()), 2))
 
@@ -17,6 +8,7 @@ defmodule AdventOfCode.Day07 do
     |> Enum.sum()
   end
 
+  @spec problem2 :: any
   def problem2 do
     arith_sum = fn n -> div(n * n + n, 2) end
 
@@ -31,5 +23,15 @@ defmodule AdventOfCode.Day07 do
 
       if sum < acc, do: sum, else: acc
     end)
+  end
+
+  defp input do
+    input =
+      File.read!("data/07/input")
+      |> String.trim()
+      |> String.split(",")
+      |> Enum.map(&String.to_integer/1)
+
+    input
   end
 end

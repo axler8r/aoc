@@ -1,27 +1,4 @@
 defmodule AdventOfCode.Day08 do
-  def input do
-    input =
-      File.stream!("data/08/input")
-      |> Stream.map(fn line ->
-        line
-        |> String.split(" | ")
-        |> Enum.map(fn part ->
-          part
-          |> String.trim()
-          |> String.split(" ")
-          |> Enum.map(fn disp ->
-            disp
-            |> String.to_charlist()
-            |> Enum.sort()
-            |> List.to_string()
-          end)
-        end)
-        |> List.to_tuple()
-      end)
-
-    input
-  end
-
   @spec problem1 :: number
   def problem1 do
     input()
@@ -45,6 +22,29 @@ defmodule AdventOfCode.Day08 do
     |> Enum.sum()
   end
 
+  defp input do
+    input =
+      File.stream!("data/08/input")
+      |> Stream.map(fn line ->
+        line
+        |> String.split(" | ")
+        |> Enum.map(fn part ->
+          part
+          |> String.trim()
+          |> String.split(" ")
+          |> Enum.map(fn disp ->
+            disp
+            |> String.to_charlist()
+            |> Enum.sort()
+            |> List.to_string()
+          end)
+        end)
+        |> List.to_tuple()
+      end)
+
+    input
+  end
+
   def a --- b do
     MapSet.difference(a, b)
   end
@@ -61,7 +61,6 @@ defmodule AdventOfCode.Day08 do
     (a +++ b) --- (a <~> b)
   end
 
-  #            1.   7.    4. 2|3|5. 2|3|5. 2|3|5.  6|9|0.  6|9|0.  6|9|0.       8.
   defp deduce({cf, acf, bcdf, _, _, _, abdefg, abcdfg, abcefg, abcdefg}) do
     a = acf --- cf
     eg = abcdefg --- (acf +++ bcdf)
