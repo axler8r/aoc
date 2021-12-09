@@ -12,5 +12,10 @@ defmodule AdventOfCode.MixProject do
   end
 
   def application, do: []
-  defp deps, do: []
+
+  defp deps do
+    [
+      {:nx, github: "elixir-nx/nx", sparse: "nx"}
+    ]
+  end
 end
