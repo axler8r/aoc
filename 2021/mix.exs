@@ -15,7 +15,6 @@ defmodule AdventOfCode.MixProject do
 
   defp deps do
     [
-      {:libgraph, "~> 0.13.3"},
       {:nx, github: "elixir-nx/nx", sparse: "nx"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
     ]
